@@ -10,6 +10,7 @@ import { formSchema } from "./schema";
 import {superValidate, message , setError} from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import nodemailer from "nodemailer";
+import { env } from '$env/dynamic/private';
 
 const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -17,8 +18,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: "kegorii",
-        pass: "pnvl aasu xqdo fsia",
+        user: env.SMTP_USER,
+        pass: env.SMTP_SECRET,
     },
 });
 
