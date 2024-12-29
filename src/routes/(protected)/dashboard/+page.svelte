@@ -16,13 +16,13 @@
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
 </script>
 
-<h1>대시보드 : Hi, {data.user.username}!</h1>
+<h1>대시보드 : Hi, {data.user.email}!</h1>
 <p>Your user ID is {data.user.id}.</p>
 <Button href="/logout">logout</Button>
 <Button
         variant="outline"
         onclick={() =>
-    toast.success(`${data.user.username} 님 로그인 되었습니다.`, {
+    toast.success(`${data.user.name} 님 로그인 되었습니다.`, {
       description: formattedDate,
       action: {
         label: "Undo",

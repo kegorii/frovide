@@ -1,31 +1,34 @@
 <script lang="ts">
     import * as Card from '$lib/components/ui/card';
     import * as Form from "$lib/components/ui/form/index.js";
+    import { page } from '$app/state';
     import {Input} from "$lib/components/ui/input/index.js";
-    import {Button} from "$lib/components/ui/button";
     import {superForm} from "sveltekit-superforms";
     import SuperDebug from "sveltekit-superforms";
     import {formSchema} from "./schema";
     import {zodClient} from "sveltekit-superforms/adapters";
-    import * as Alert from "$lib/components/ui/alert/index.js";
     import {LoaderCircle, CircleAlert} from "lucide-svelte";
-
+    import * as Alert from "$lib/components/ui/alert/index.js";
     let {data} = $props();
     const form = superForm(data.form, {
         clearOnSubmit: 'errors',
         validators: zodClient(formSchema),
     });
-    const {form: formData, enhance, message, errors, delayed} = form;
+    const {form: formData, enhance, delayed, errors,message} = form;
+
+
 
 </script>
-<div class="flex h-screen w-full items-center justify-center px-4 ">
+<div class="flex h-screen w-full items-center justify-center px-4 bg-gray-100 ">
     <Card.Root class="mx-auto max-w-sm w-96">
         <form method="POST" use:enhance>
             <Card.Header>
                 <Card.Title class="text-xl">
-                    <div class="flex">Login</div>
+                    <div class="flex">Register</div>
                 </Card.Title>
-                <!--                <Card.Description>로그인</Card.Description>-->
+                <Card.Description>
+
+                </Card.Description>
             </Card.Header>
             <Card.Content>
                 <div class="grid gap-2">
@@ -56,20 +59,18 @@
                     {/if}
                 </div>
             </Card.Content>
-            <Card.Footer class="block">
+            <Card.Footer>
                 <Form.Button class="w-full" disabled={$delayed}>
                     {#if $delayed}
                         <LoaderCircle class="animate-spin"/>
                         처리중..
                     {:else}
-                        로그인
+                        회원가입
                     {/if}
                 </Form.Button>
-                <Button href="/register" variant="outline" class="w-full mt-4">계정등록</Button>
             </Card.Footer>
-<!--            <SuperDebug data={errors}/>-->
-<!--            <SuperDebug data={$message}/>-->
+            <!--            <SuperDebug data={errors}/>-->
+            <!--            <SuperDebug data={$message}/>-->
         </form>
     </Card.Root>
-
 </div>

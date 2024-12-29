@@ -7,7 +7,7 @@ import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
 import type { Actions, PageServerLoad } from './$types';
 import { formSchema } from "./schema";
-import {superValidate, message } from "sveltekit-superforms";
+import {superValidate, setError} from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 
 
@@ -23,19 +23,18 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
     default: async (event) => {
         const formData = await superValidate(event.request, zod(formSchema));
-        const username = formData.data.username;
+        const email = formData.data.email;
         const password = formData.data.password;
 
         const results = await db
             .select()
             .from(table.user)
-            .where(eq(table.user.username, username));
+            .where(eq(table.user.email, email));
 
         const existingUser = results.at(0);
         if (!existingUser) {
-            return message(formData, '사용자를 찾을수 없습니다',{
-                status: 403
-            });
+            return setError(formData, 'email', '등록된 이메일이 아닙니다.');
+
         }
 
         const validPassword = await verify(existingUser.passwordHash, password, {
@@ -45,9 +44,7 @@ export const actions: Actions = {
             parallelism: 1,
         });
         if (!validPassword) {
-            return message(formData, '비밀번호 불일치',{
-                status: 403
-            });
+            return setError(formData, 'password', '비밀번호가 일치하지 않습니다.');
         }
 
         const sessionToken = auth.generateSessionToken();
