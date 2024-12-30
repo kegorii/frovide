@@ -66,7 +66,15 @@ export const actions: Actions = {
         }
 
         try {
-            await db.insert(table.user).values({ id: userId, email, passwordHash });
+            await db.insert(table.user).values({
+                id: userId,
+                email,
+                passwordHash,
+                name: email.split('@')[0],
+                role: 'GUEST',
+                emailVerified: false,
+                emailVerifyCode: crypto.randomUUID(),
+            });
 
             const sessionToken = auth.generateSessionToken();
             const session = await auth.createSession(sessionToken, userId);

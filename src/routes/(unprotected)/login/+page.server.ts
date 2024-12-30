@@ -50,7 +50,9 @@ export const actions: Actions = {
         const sessionToken = auth.generateSessionToken();
         const session = await auth.createSession(sessionToken, existingUser.id);
         auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-
+        if(!results.at(0).emailVerified){
+            return redirect(302, '/verify-email');
+        }
         return redirect(302, '/dashboard');
     },
 };

@@ -1,7 +1,8 @@
 <script lang="ts">
-    import Calendar from "lucide-svelte/icons/calendar";
+    import LogOut from "lucide-svelte/icons/log-out";
     import House from "lucide-svelte/icons/house";
     import Inbox from "lucide-svelte/icons/inbox";
+    import CircleUserRound from "lucide-svelte/icons/circle-user-round";
     import * as Sidebar from "$lib/components/ui/sidebar/index";
     import { toggleMode } from "mode-watcher";
     import { Button } from "$lib/components/ui/button/index.js";
@@ -17,12 +18,16 @@
         {
             title: "프로필수정",
             url: "/profile",
+            icon: CircleUserRound,
+        },        {
+            title: "이메일인증",
+            url: "/verify-email",
             icon: Inbox,
         },
         {
             title: "로그아웃",
             url: "/logout",
-            icon: Calendar,
+            icon: LogOut,
         },
     ];
 </script>

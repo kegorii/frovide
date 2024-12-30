@@ -1,8 +1,8 @@
 <script lang='ts'>
     import type { PageServerData } from './$types';
+    let { data }: { data: PageServerData } = $props();
     import {Button} from "$lib/components/ui/button";
     import { toast } from "svelte-sonner";
-    let { data }: { data: PageServerData } = $props();
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = {
         weekday: 'long',
@@ -16,8 +16,12 @@
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(now);
 </script>
 
-<h1>대시보드 : Hi, {data.user.email}!</h1>
-<p>Your user ID is {data.user.id}.</p>
+<h1>어서오세요 {data.user.name}님! 반갑습니다.</h1>
+<p>NAME: {data.user.name} </p>
+<p>ID: {data.user.id}</p>
+<p>ROLE: {data.user.role}</p>
+<p>EMAIL: {data.user.email}</p>
+<p>...</p>
 <Button href="/logout">logout</Button>
 <Button
         variant="outline"
