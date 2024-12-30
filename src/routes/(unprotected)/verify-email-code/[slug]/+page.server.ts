@@ -1,5 +1,4 @@
 import type { PageServerLoad } from './$types';
-import {db} from "$lib/server/db";
 import * as table from "$lib/server/db/schema";
 import {eq} from "drizzle-orm";
 import { db } from '$lib/server/db';
